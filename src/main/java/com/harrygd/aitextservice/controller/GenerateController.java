@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import com.harrygd.aitextservice.model.GenerateRequest;
 import com.harrygd.aitextservice.model.GenerateResponse;
 import com.harrygd.aitextservice.model.GenerateFormat;
+import com.harrygd.aitextservice.service.TextGenerationService;
 
 import jakarta.validation.Valid;
 
@@ -13,6 +14,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/v1")
 public class GenerateController {
     
+    private final TextGenerationService textGenerationService;
+
+    public GenerateController(TextGenerationService textGenerationService) {
+        this.textGenerationService = textGenerationService;
+    }
+
     @GetMapping("/ping")
     public String ping() {
         return "ok";
@@ -20,7 +27,7 @@ public class GenerateController {
 
     @PostMapping("/generate")
     public GenerateResponse generate(@Valid @RequestBody GenerateRequest request) {
-        GenerateFormat fmt = request.getFormat();
-        return new GenerateResponse("Stubbed output for format: " + fmt);
+        String result = textGenerationService.generateText(request.getKeywords(), request.getFormat());
+        return new GenerateResponse(result);
     }
 }
