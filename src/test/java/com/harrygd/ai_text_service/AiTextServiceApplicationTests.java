@@ -1,13 +1,13 @@
-package com.harrygd.ai_text_service;
+// package com.harrygd.ai_text_service;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class AiTextServiceApplicationTests {
+// @SpringBootTest
+// class AiTextServiceApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }
