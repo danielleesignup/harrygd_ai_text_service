@@ -16,8 +16,6 @@ public class GenerateRequest {
     @NotEmpty(message= "keywords must not be empty")
     @Size(max = 20, message = "keywords cannot exceed 20 items")
     private List<@Size(min = 1, max = 64, message = "each keyword must be 1-64 chars") String> keywords;
-
-    @NotEmpty(message= "format must not be empty")
  
     public List<String> getKeywords() { return keywords; }
     public void setKeywords(List<String> keywords) { this.keywords = keywords; }
