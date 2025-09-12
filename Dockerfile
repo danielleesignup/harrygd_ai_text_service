@@ -16,7 +16,7 @@ RUN mvn clean package -DskipTests
 # ---------------------------
 # STEP 2: Run the application
 # ---------------------------
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:17-jre-alpine
 
 # Set working directory in runtime image
 WORKDIR /app
