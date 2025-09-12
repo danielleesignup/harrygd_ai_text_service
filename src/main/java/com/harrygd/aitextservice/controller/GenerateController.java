@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import com.harrygd.aitextservice.model.GenerateRequest;
 import com.harrygd.aitextservice.model.GenerateResponse;
 import com.harrygd.aitextservice.model.GenerateFormat;
+import com.harrygd.aitextservice.model.Generation;
+import com.harrygd.aitextservice.repository.GenerationRepository;
 import com.harrygd.aitextservice.service.TextGenerationService;
 
 import jakarta.validation.Valid;
