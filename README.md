@@ -49,6 +49,23 @@ docker run -e OPENAI_API_KEY=sk-your-key-here \
   -p 8080:8080 harrygd/ai-text-service
 ```
 
+
+## API Usage
+
+## API Usage
+
+### Endpoint: Generate Text
+```
+**POST** `/v1/generate`
+```
+#### Request Body
+```json
+{
+  "keywords": ["budget", "timeline"],
+  "format": "NOTES"
+}
+*format can be NOTES or DIALOGUE
+```
 ## Testing
 ### Run all tests locally
 ```
