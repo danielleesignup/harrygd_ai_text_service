@@ -38,21 +38,77 @@ Built as part of a real-world internship project, this service is Dockerized, te
 ## Running the Service
 ### Prerequisites
 
--Docker installed and running
--An OpenAI API key (sk-...)
+-Docker Desktop installed and running
+-Docker Compose v2+
+-An OpenAI API key (sk-...) in .env file
 
-### Run with Docker
+### Running Locally 
+#### Build and Start:
 ```
-docker build -t harrygd/ai-text-service .
+docker compose up --build
+```
+#### Restart only the app (keep DB running):
+```
+docker compose restart app
+```
+#### Stop containers but keep DB data:
+```
+docker compose down
+```
+#### Stop and remove everything (⚠️ wipes DB volume):
+```
+docker compose down -v
+```
 
-docker run -e OPENAI_API_KEY=sk-your-key-here \
-  -p 8080:8080 harrygd/ai-text-service
+### Logs
+
+#### Follow app logs:
+```
+docker compose logs -f app
+```
+
+#### Follow database logs:
+```
+docker compose logs -f db
+```
+
+### Database
+
+#### Open a Postgres shell:
+```
+docker exec -it ai-postgres psql -U ai_user -d ai_text_db
+```
+
+#### List tables:
+```
+\dt
+```
+
+#### Query recent generations:
+```
+SELECT id, keywords, LEFT(generated_text, 40), created_at
+FROM generations
+ORDER BY id DESC
+LIMIT 5;
+```
+
+#### Exit:
+```
+\q
+```
+
+#### Run a one-off query:
+```
+docker exec -it ai-postgres psql -U ai_user -d ai_text_db ^
+  -c "SELECT id, keywords, LEFT(generated_text,40), created_at FROM generations ORDER BY id DESC LIMIT 5;"
 ```
 
 
 ## API Usage
-
-## API Usage
+### Health Check
+```
+curl.exe http://localhost:8080/actuator/health
+```
 
 ### Endpoint: Generate Text
 ```
@@ -64,8 +120,10 @@ docker run -e OPENAI_API_KEY=sk-your-key-here \
   "keywords": ["budget", "timeline"],
   "format": "NOTES"
 }
-*format can be NOTES or DIALOGUE
+
 ```
+-format can be NOTES or DIALOGUE
+
 ## Testing
 ### Run all tests locally
 ```
