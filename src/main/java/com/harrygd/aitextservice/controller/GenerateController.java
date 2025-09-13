@@ -17,9 +17,12 @@ import jakarta.validation.Valid;
 public class GenerateController {
     
     private final TextGenerationService textGenerationService;
+    private final GenerationRepository generationRepository;
 
-    public GenerateController(TextGenerationService textGenerationService) {
+    public GenerateController(TextGenerationService textGenerationService, GenerationRepository generationRepository) {
         this.textGenerationService = textGenerationService;
+        this.generationRepository = generationRepository;
+
     }
 
     @GetMapping("/ping")
@@ -29,7 +32,15 @@ public class GenerateController {
 
     @PostMapping("/generate")
     public GenerateResponse generate(@Valid @RequestBody GenerateRequest request) {
+        // 1. Generate Text
         String result = textGenerationService.generateText(request.getKeywords(), request.getFormat());
+        
+        // // 2. Save to Postgres
+        Generation g = new Generation(String.join(",", request.getKeywords()), result);
+        System.out.println(">>> Saving to DB: " + result);
+        generationRepository.save(g);
+        
+        // 3. Return response
         return new GenerateResponse(result);
     }
 }
