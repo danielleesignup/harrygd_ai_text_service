@@ -23,9 +23,23 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      SPRING_APPLICATION_JSON: >
+        {
+          "management.metrics.enable.process": false,
+          "management.metrics.enable.system": false,
+          "management.metrics.export.simple.enabled": false
+        }
+    command: >
+      java -Dmanagement.metrics.enable.process=false
+           -Dmanagement.metrics.enable.system=false
+           -Dmanagement.metrics.export.simple.enabled=false
+           -jar /app/app.jar
     ports:
       - "8080:8080"
     networks: [backend]
+  
+
+
 
 networks:
   backend:
